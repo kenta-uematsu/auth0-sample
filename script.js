@@ -1,6 +1,6 @@
 'use strict';
 
-const APP_PATH = `/auth0staticsitesample`; // https://ユーザー名.github.io/<ココ> or ルートパス利用なら`/`だけでOK
+const APP_PATH = `/`; // https://ユーザー名.github.io/<ココ> or ルートパス利用なら`/`だけでOK
 let auth0 = null;
 const fetchAuthConfig = () => fetch("auth_config.json"); // auth_config.json読み込み
 
@@ -32,7 +32,7 @@ window.onload = async () => {
 
     // Process the login state
     await auth0.handleRedirectCallback();
-    
+
     updateUI();
 
     // Use replaceState to redirect the user away and remove the querystring parameters
@@ -40,12 +40,12 @@ window.onload = async () => {
   }
 };
 
-const updateUI = async () => { 
+const updateUI = async () => {
   const isAuthenticated = await auth0.isAuthenticated();
 
   document.getElementById("btn-logout").disabled = !isAuthenticated;
   document.getElementById("btn-login").disabled = isAuthenticated;
-  
+
   // NEW - add logic to show/hide gated content after authentication
   if (isAuthenticated) {
     document.getElementById("gated-content").classList.remove("hidden");
